@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+</head>
+<body>
+<h1>Tasks List</h1>
+  <ul>
+    {% for task in task_list %}
+        {% if task.is_done %}
+         <li><strike>{{ task.title }}</strike></li>
+        <a href="{% url 'todo_app:update_task' task.pk %}">Edit</a>
+        <a href="{% url 'todo_app:delete_task' task.pk %}">Delete</a>
+        <br><br>
+        {% else %}
+        <li>{{ task.title }}</li>
+        <p>{{ task.description|title }}</p>
+        <a href="{% url 'todo_app:update_task' task.pk %}">Edit</a>
+        <a href="{% url 'todo_app:delete_task' task.pk %}">Delete</a>
+        {% endif %}
+        <br><br>
+    {% empty %}
+      <li>No Tasks Found.</li>
+    {% endfor %}
+  </ul>
+<a href="{% url 'todo_app:create_task' %}">Create New Task</a>
+<br><br>
+<a href="{% url 'todo_app:v1.api.todo:api_task_list_create' %}">Create New Task With DRF - API</a>
+<br><br>
+<a href="{% url 'accounts:v1.api.accounts:register' %}">Signup With API</a>
+<br><br>
+{% if request.user.is_authenticated %}
+    <a href="{% url 'accounts:logout' %}">Logout</a>
+{% endif %}
+</body>
+</html>

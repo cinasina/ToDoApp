@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo App</title>
+</head>
+<body>
+  <ul>
+    {% for task in task_list %}
+        <li>{{ task.title }}</li>
+        <p>{{ task.description|title }}</p>
+        <a href="{% url 'todo_app:update_task' task.pk %}">Edit</a>
+        <a href="{% url 'todo_app:delete_task' task.pk %}">Delete</a>
+    {% endfor %}
+  </ul>
+<h1>Update Task</h1>
+<form action="." method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Create">
+</form>
+</body>
+</html>
